@@ -7,7 +7,7 @@ export default function VehicleTable({ refresh }) {
   const [sortField, setSortField] = useState("");
 
   const fetchVehicles = () => {
-    fetch("http://127.0.0.1:5000/cars")
+    fetch("http://127.0.0.1:5000/vehicles")
       .then(res => res.json())
       .then(data => setVehicles(data))
       .catch(err => console.error(err));

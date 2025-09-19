@@ -4,12 +4,10 @@ export default function CombinedForm({ onVehicleAdded }) {
   const [holderId, setHolderId] = useState("");
   const [holderName, setHolderName] = useState("");
   const [holderAddress, setHolderAddress] = useState("");
-
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [fuelType, setFuelType] = useState("");
   const [registrationYear, setRegistrationYear] = useState("");
-
   const [holderAdded, setHolderAdded] = useState(false);
 
   const handleHolderSubmit = (e) => {
@@ -32,9 +30,10 @@ export default function CombinedForm({ onVehicleAdded }) {
 
   const handleVehicleSubmit = (e) => {
     e.preventDefault();
-    if (!vehicleNumber || !vehicleType || !fuelType || !registrationYear) return alert("Enter vehicle details");
+    if (!vehicleNumber || !vehicleType || !fuelType || !registrationYear)
+      return alert("Enter vehicle details");
 
-    fetch("http://127.0.0.1:5000/cars", {
+    fetch("http://127.0.0.1:5000/vehicles", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -42,11 +41,12 @@ export default function CombinedForm({ onVehicleAdded }) {
         vehicle_number: vehicleNumber,
         vehicle_type: vehicleType,
         fuel_type: fuelType,
-        registration_year: registrationYear,
+        registration_year: registrationYear
       }),
     })
-      .then(() => {
-        alert("Vehicle Added!");
+      .then(res => res.json())
+      .then(data => {
+        alert(`Vehicle Added! ID: ${data.vehicle_id}`);
         onVehicleAdded();
         setVehicleNumber(""); setVehicleType(""); setFuelType(""); setRegistrationYear("");
       })

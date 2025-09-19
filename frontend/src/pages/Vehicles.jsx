@@ -8,7 +8,7 @@ export default function Vehicles({ refresh }) {
   const rowsPerPage = 10;
 
   const fetchVehicles = () => {
-    fetch("http://127.0.0.1:5000/cars")
+    fetch("http://127.0.0.1:5000/vehicles")  // ✅ corrected URL
       .then(res => res.json())
       .then(data => setVehicles(data))
       .catch(err => console.error(err));
@@ -17,7 +17,7 @@ export default function Vehicles({ refresh }) {
   useEffect(() => { fetchVehicles(); }, [refresh]);
 
   const filtered = vehicles.filter(v =>
-    v.car_number.toLowerCase().includes(search.toLowerCase()) ||
+    v.vehicle_number.toLowerCase().includes(search.toLowerCase()) ||
     v.holder_id.toString().includes(search) ||
     v.vehicle_type.toLowerCase().includes(search.toLowerCase()) ||
     v.fuel_type.toLowerCase().includes(search.toLowerCase())
@@ -59,10 +59,10 @@ export default function Vehicles({ refresh }) {
           {displayed.map(v => {
             const expired = parseInt(v.registration_year)+10 < new Date().getFullYear();
             return (
-              <tr key={v.car_id} className={expired?"expired":""}>
-                <td>{v.car_id}</td>
+              <tr key={v.vehicle_id} className={expired?"expired":""}>
+                <td>{v.vehicle_id}</td>
                 <td>{v.holder_id}</td>
-                <td>{v.car_number}</td>
+                <td>{v.vehicle_number}</td>
                 <td>{v.vehicle_type}</td>
                 <td>{v.fuel_type}</td>
                 <td>{v.registration_year}</td>
